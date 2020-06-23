@@ -1,13 +1,18 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { KafkaEmailServiceModule } from './kafka-email-service/kafka-email-service.module';
-import { KafkaEmailEngineService } from './kafka-email-service/services/kafka-email-engine.service';
-import { KafkaEmailServiceController } from './kafka-email-service/kafka-email-service.controller';
+import { KafkaGateWayService } from './services/kafka-gateway.service';
+import { KafkaGateWayController } from './kafka-gateway-v1/kafka-gateway.controller';
 
 @Module({
-  imports: [KafkaEmailServiceModule],
-  controllers: [AppController,KafkaEmailServiceController],
-  providers: [AppService, KafkaEmailEngineService],
+  imports: [KafkaGateWayService],
+  controllers: [AppController, KafkaGateWayController],
+  providers: [
+    AppService,
+    {
+      provide: 'IKafkaGateWayInterface',
+      useClass: KafkaGateWayService,
+    },
+  ],
 })
 export class AppModule {}

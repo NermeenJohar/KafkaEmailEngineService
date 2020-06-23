@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { KafkaEmailEngineService } from './kafka-email-engine.service';
+import { KafkaGateWayService } from './kafka-gateway.service';
 
 describe('KafkaEmailEngineService', () => {
-  let service: KafkaEmailEngineService;
+  let service: KafkaGateWayService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [KafkaEmailEngineService],
+      providers: [KafkaGateWayService],
     }).compile();
 
-    service = module.get<KafkaEmailEngineService>(KafkaEmailEngineService);
+    service = module.get<KafkaGateWayService>(KafkaGateWayService);
   });
 
   it('should be defined', () => {

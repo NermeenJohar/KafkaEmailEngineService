@@ -2,15 +2,15 @@ import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { Kafka, Producer } from 'kafkajs';
 
 @Injectable()
-export class KafkaEmailEngineService implements OnModuleInit, OnModuleDestroy {
+export class KafkaGateWayService implements OnModuleInit, OnModuleDestroy {
   private kafka: Kafka;
   private producer: Producer;
 
   constructor() {
-    this.kafka = new Kafka({
+   this.kafka =  new Kafka({
       clientId: 'id',
       brokers: ['mybuild.centralus.cloudapp.azure.com:9092'],
-    });
+    })
     this.producer = this.kafka.producer();
   }
 
@@ -37,7 +37,7 @@ export class KafkaEmailEngineService implements OnModuleInit, OnModuleDestroy {
   // Send Message with Payload to kafka Email Engine Service
   async sendMessage(payloadMessage: any) {
     payloadMessage.EmailParameters = JSON.stringify(payloadMessage.EmailParameters);
-    await this.producer.connect();
+    await this.connect;
     const metadata = await this.producer
       .send({
         topic: payloadMessage.topicName,
